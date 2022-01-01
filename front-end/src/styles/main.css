@@ -22,6 +22,7 @@
   --rs-input-focus-border: rgba(255, 255, 255, 0) !important;
   --rs-listbox-option-hover-text: none !important;
   --rs-slider-thumb-hover-shadow: none !important;
+  --mobile-breakpoint: 450px
   /* --rs-input-focus-border:#fc405f00
   --rs-state-focus-shadow:0 0 0 0px */
 }
@@ -29,6 +30,11 @@
 /* ! Body selector */
 body {
   position: relative;
+}
+
+.ui.grid {
+  margin: 0 !important;
+  padding: 24px 5vw 50px 5vw !important;
 }
 
 .stop-scrolling {
@@ -95,15 +101,19 @@ h3 {
   color: black !important;
   padding: 0 28px !important;
 }
-/* White headers */
+/* White headers with shadow*/
 h2 {
   font-family: 'airbnb_cereal_appbook' !important;
   font-size: 41px;
   color: rgb(255, 255, 255) !important;
   text-shadow: 1px 1px 2px rgb(0, 0, 0) !important;
 }
-/*  */
-/*  */
+
+@media (max-width: 400px) {  
+  h2 {
+    font-size: 24px !important;
+  }
+}
 
 /* Add .black to change background color to black */
 body .black { 
@@ -119,15 +129,17 @@ body .black {
 
 /* Calendar container */
 .rs-picker-menu {
-
   border-radius: 32px !important;
   padding: 16px 32px !important;
   height: 450px !important;
   width: 849px !important;
   background-color: white !important;
-  transform: translate(-50%);
   z-index: 200 !important;
   overflow: visible !important;
+  position: fixed !important;
+  top: 148px !important;
+  margin-left: auto !important;
+  left: calc((100vw - 849px) / 2) !important;
 }
 
 /* Single calendar */
@@ -135,8 +147,14 @@ body .black {
   border: none !important;
   padding: 27px !important;
   height: auto !important;
-  width: 50% !important;
+  width: 50%;
 }
+
+/* @media (max-width: var(--mobile-breakpoint)) {
+  .rs-calendar {
+    width: 100% !important;
+  }
+} */
 
 .ui.menu {
   box-shadow: none !important;
@@ -272,7 +290,7 @@ body .black {
   max-width: 100vw !important;
   position: absolute !important;
   width: 316px !important;
-  transform: translate(0, 100%);
+  transform: translate(-37px, 100%);
   padding: 0 !important;
   background: transparent !important;
 }
@@ -300,6 +318,100 @@ body .black {
   align-items: center;
 }
 
+@media (max-width: 520px) {
+  .filters-bar {
+    display: none !important;
+  }
+  #buttons-parent {
+    position: absolute !important;
+    top: -4px !important;
+  }
+  .large-button {
+    width: 90vw !important;
+    padding: 0px !important;
+  }
+  .dates, .dates-clicked {
+    padding-left: 25px !important;
+  }
+  
+  .navbar-grid {
+    display: flex !important;
+    flex-wrap: wrap !important;
+  }
+
+  .right.item.dropdown {
+    height: 74px;
+    width: 322px;
+    position: absolute !important;
+    display: flex;
+    justify-content: center;
+    top: 148px !important;
+    left: calc((100vw - 322px) / 2)  !important;
+    z-index: 100 !important;
+    padding: 0px !important;
+  }
+
+  .mobile-width {
+    width: 322px !important;
+    justify-content: space-between;
+  }
+
+  .dropdown-content {
+    position: absolute;
+    width: 322px !important;
+    left: 0vw !important;
+
+
+  }
+  .move-left{
+    justify-content: flex-start !important;
+    padding-right: 0px !important;
+    margin: auto !important;
+    display: flex !important;
+    justify-content: flex-start !important;
+  }
+
+  .button-center {
+    display: none !important; 
+  }
+
+  .navbar-extended {
+    position: fixed !important;
+    top: 74px !important
+  }
+
+  .menu.borderless {
+    height: 210px !important;
+    justify-content: flex-start !important;
+  }
+
+  .ui.item {
+    max-height: 74px !important;
+  }
+
+  .navbar-center {
+    position: fixed;
+    top: 74px !important
+  }
+
+  .navbar-break {
+    position: relative !important;
+    top: 130px !important;
+    left: 0 !important;
+  }
+}
+
+.button-center {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 74px;
+  top: 0;
+  right: 0;
+  left: 0;
+}
+
 .navbar-center {
   position: absolute !important;
   transform: translate(-50%) translate(50vw);
@@ -324,15 +436,15 @@ body .black {
 /* Navbar - extednded section */
 .navbar-extended {
   background-color: white;
-  height: 100%;
+  height: 74px;
   width: 100vw;
-  min-width: 400px;
-  position: absolute;
+  min-width: 322px;
+  position: fixed;
   display: flex;
   justify-content: center;
   left: 0px;
+  right: 0px;
   top: 74px;
-  transform: translate(-50%);
 }
 
 /* ! Filters bar */
@@ -352,7 +464,8 @@ body .black {
   flex-direction: column;
   padding: 20px;
   width: 440px;
-  height: 280px;
+  max-width: 90vw;
+  height: 305px;
 }
 
 
@@ -429,6 +542,7 @@ body .black {
   padding-left: 0px !important;
   display: block !important;
 }
+
 
 .filter-button {
   font-family: 'airbnb_cereal_applight' !important;
@@ -709,6 +823,62 @@ select:-webkit-autofill:active {
   background: linear-gradient(to left, rgb(139, 139, 139), rgb(245, 245, 245) 60%);
 }
 
+
+/* Navbar - responsive */
+@media (max-width: 900px) {  
+  /* .navbar-extended {
+    justify-content: center !important;
+  } */
+  .location, .location-clicked {
+    display: none !important;
+  }
+  #buttons-parent {
+    width: 320px !important;
+  }
+  .large-button {
+    width: 322px !important;
+    padding: 0px !important;
+  }
+  .dates, .dates-clicked {
+    padding-left: 25px !important;
+  }
+  .rs-picker-toggle-wrapper {
+    width: 213px !important;
+    transform: translate(-199px, 100%);
+  }
+
+  @media (max-width: 520px) {
+    .rs-picker-toggle-wrapper {
+      position: fixed !important;
+      top: 74px !important;
+      height: 74px !important;
+      left: calc((100vw - 322px) / 2)  !important;
+      background: red !important;
+      width: 215px !important;
+      transform: none !important;
+      z-index: 100;
+
+    }
+  }
+
+  .rs-anim-fade.rs-anim-in.rs-picker-daterange-menu.rs-picker-menu.placement-bottom-start {
+    position: fixed !important;
+    top: 148px !important;
+    width: 354px !important;
+    height: 800px !important;
+    left: calc((100vw - 354px) / 2) !important;
+    padding: 10px !important;
+  }
+  .rs-picker-daterange-calendar-group {
+    width: 100% !important;
+    min-width: 0px !important;
+  }
+  .rs-calendar {
+    width: 100% !important;
+    padding: 12px 0 !important
+  }
+}
+
 /* ! Hero - Home page */
 .hero {
   display: flex;
@@ -907,10 +1077,30 @@ select:-webkit-autofill:active {
   width: 420px;
   background-color: white !important;
   border-radius: 24px !important;
+  z-index: 200 !important;
 }
+
+@media (max-width:520px) {
+  .popup-window {
+    margin-top: -5px !important;
+    max-width: 420px;
+    min-width: 322px;
+    background-color: white !important;
+    border-radius: 24px !important;
+    z-index: 200 !important;
+  }
+  
+  .popup-form-container {
+    width: 100%;
+  }
+}
+
 
 /* ! Home page categories */
 
+.food, .entertainment, .nature, .culture {
+  min-width: 250px !important;
+}
 
 .nature {
   background: url('../assets/images/nature-and-outdoors.jpeg') !important;
@@ -944,6 +1134,12 @@ select:-webkit-autofill:active {
   transition-duration: 1s;
 }
 
+@media (max-width: 400px) {  
+  .food, .entertainment, .nature, .culture {
+    padding: 20px !important;
+  }
+}
+
 /* Explore button */
 .explore {
   width: 175px;
@@ -964,10 +1160,13 @@ select:-webkit-autofill:active {
 /* ! Home page inspirations */
 
 .inspiration-image {
-  min-width: 250px;
   height: 320px;
   background-size: cover !important;
   background-position: center;
+}
+
+.min-300 {
+  width: 300px !important
 }
 
 /* EXPERIENCES.JS */
@@ -1068,6 +1267,12 @@ select:-webkit-autofill:active {
   /* background-image: url('https://traista.com/wp-content/uploads/2018/03/London-Google-map.png'); */
   background-size: no-repeat;
 } 
+
+@media (max-width: 650px) {
+  .map {
+    display: none !important;
+  }
+}
 
  .map-container {
   position: fixed;

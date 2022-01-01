@@ -142,7 +142,7 @@ const Experiences = () => {
   // console.log(popup)
   // console.log('EXPERIENCES ->', experiences)
   return (
-    <Grid divided='vertically'>
+    <Grid className='navbar-break' divided='vertically'>
       <Grid.Row columns={2} >
         <Grid.Column width={9} id='left-column'>
 

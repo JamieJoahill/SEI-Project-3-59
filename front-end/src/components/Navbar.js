@@ -31,13 +31,14 @@ const Navbar = () => {
   const [categoryString, setCategoryString] = useState('')
   const [categories] = useState([])
 
-  useEffect(() => {
-    if (datesClicked) {
-      document.body.classList.add('stop-scrolling')
-    } else {
-      document.body.classList.remove('stop-scrolling')
-    }
-  }, [datesClicked])
+  // scrolling
+  // useEffect(() => {
+  //   if (datesClicked) {
+  //     document.body.classList.add('stop-scrolling')
+  //   } else {
+  //     document.body.classList.remove('stop-scrolling')
+  //   }
+  // }, [datesClicked])
 
   useEffect(() => {
     if (location.pathname === '/experiences') {
@@ -98,7 +99,7 @@ const Navbar = () => {
       }, { once: true })
     }} className='ui item navbar-center'>
       <div className=' navbar-button'>
-        <div className='navbar-item'>
+        <div className='navbar-item mobile-width'>
           <div className='search-data'>
             <p>Nearby</p>
             {displayDates !== 'Start date - end date' ? <p>{displayDates}</p> : <p>Select dates</p>}
@@ -152,8 +153,8 @@ const Navbar = () => {
   // Date picker calendar component -> rsuite module
   const datePicker = (
     <div className='ui item navbar-secondary'>
-      <div className='navbar-link'>
-        Experiences
+      <div className='button-center'>
+        <p>Experiences</p>
       </div>
       {datePickerButtonLarge}
       <DateRangePicker format={'dd-MMM-yyyy'} toggleAs={'button'}
@@ -414,10 +415,11 @@ const Navbar = () => {
     setCategoryString(string)
   }
 
+  // Updates category
   useEffect(() => {
-    console.log('running')
-  
-    setFilter()
+    if (location.pathname === '/experiences') {
+      setFilter()
+    }
   }, [categoryString])
 
   // !!!!!!!!!!!!!!!!!!!
@@ -465,7 +467,7 @@ const Navbar = () => {
   )
 
   return (
-    <div className='ui top fixed menu borderless toggle-background'>
+    <div className='ui top fixed menu borderless toggle-background navbar-grid'>
       <div onClick={() => {
         redirect('/')
         categories.splice(0, categories.length)
@@ -479,8 +481,8 @@ const Navbar = () => {
       }
       {openFilters ? filtersBar : <></>}
       <div className='ui right item dropdown'>
-        <div className='navbar-button'>
-          <div className='navbar-item'>
+        <div className=''>
+          <div className='navbar-button navbar-item move-left'>
             <i className='bars icon' />
             <div className='user-icon'>
               <svg viewBox='0 0 32 32' fill='grey'><path d='m16 .7c-8.437 0-15.3 6.863-15.3 15.3s6.863 15.3 15.3 15.3 15.3-6.863 15.3-15.3-6.863-15.3-15.3-15.3zm0 28c-4.021 0-7.605-1.884-9.933-4.81a12.425 12.425 0 0 1 6.451-4.4 6.507 6.507 0 0 1 -3.018-5.49c0-3.584 2.916-6.5 6.5-6.5s6.5 2.916 6.5 6.5a6.513 6.513 0 0 1 -3.019 5.491 12.42 12.42 0 0 1 6.452 4.4c-2.328 2.925-5.912 4.809-9.933 4.809z'></path></svg>

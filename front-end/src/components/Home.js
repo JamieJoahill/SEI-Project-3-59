@@ -76,7 +76,7 @@ const Home = () => {
               <div onClick={() => {
                 history.push(`/experiences/experience/${experience.id}`)
                 window.scrollTo(0, 0)
-              }} key={experience.id} className='column'>
+              }} key={experience.id} className='column min-300'>
                 <div className='ui card' style={{ minWidth: '250px', height: '430px', overflow: 'hidden' }}>
                   <div className='ui slide masked reveal image inspiration-image'>
                     <div className='inspiration-image visible content' style={{ background: `url(${experience.image[0]})` }} />
