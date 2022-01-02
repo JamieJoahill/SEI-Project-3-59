@@ -29,11 +29,21 @@ const Experiences = () => {
   }
 
   const checkDate = (experience) => {
-    let dates = experience.date
-    dates = dates.map(date => {
-      return new Date(`${date.year}-${convertDate(date.month)}-${convertDate(date.day)}`)
+    const dates = experience.date
+    const datesSet = new Array
+    const currentTime = new Date
+    dates.forEach(date => {
+      for (let i = 1; i <= 12; i++) {
+        datesSet.push(new Date(`${currentTime.getFullYear() - 1}-${convertDate(i)}-${convertDate(date.day)}`))
+        datesSet.push(new Date(`${currentTime.getFullYear() + 1}-${convertDate(i)}-${convertDate(date.day)}`))
+        datesSet.push(new Date(`${currentTime.getFullYear()}-${convertDate(i)}-${convertDate(date.day)}`)) 
+      }
     })
-    if (dates.some(date => (date >= from) && (date <= to))) {
+    console.log('dsssssss', datesSet)
+    // dates = dates.map(date => {
+    //   return new Date(`${date.year}-${convertDate(date.month)}-${convertDate(date.day)}`)
+    // })
+    if (datesSet.some(date => (date >= from) && (date <= to))) {
       return true
     } else {
       return false
