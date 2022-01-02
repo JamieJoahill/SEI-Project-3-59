@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react'
-import { Grid, Container, Header, Card, Divider, Icon } from 'semantic-ui-react'
+import { Grid, Header, Card, Divider, Icon } from 'semantic-ui-react'
 import ReactMapGL, { Marker, Popup } from 'react-map-gl' // yarn add react-map-gl to enable mapbox
 import axios from 'axios'
 import { Link } from 'react-router-dom'
@@ -40,9 +40,7 @@ const Experiences = () => {
       }
     })
     console.log('dsssssss', datesSet)
-    // dates = dates.map(date => {
-    //   return new Date(`${date.year}-${convertDate(date.month)}-${convertDate(date.day)}`)
-    // })
+
     if (datesSet.some(date => (date >= from) && (date <= to))) {
       return true
     } else {
@@ -153,15 +151,15 @@ const Experiences = () => {
   // console.log('EXPERIENCES ->', experiences)
   return (
     <Grid className='navbar-break' divided='vertically'>
-      <Grid.Row columns={2} >
-        <Grid.Column width={9} id='left-column'>
+      <Grid.Row >
+        <Grid.Column className='left-column'>
 
           {/* Column on left */}
 
-          <Container>
+          <section>
             <div className='header-div'>
               <p>{experiences.length} experiences</p>
-              <Header as='h4'>Experiences in London</Header>
+              <h4>Experiences in London</h4>
               <p>Review COVID-19 travel restrictions before you book. <a href='https://www.airbnb.co.uk/help/topic/1418/government-travel-restrictions-and-advisories' target='blank'>Learn more</a></p>
             </div>
             <div>
@@ -184,7 +182,7 @@ const Experiences = () => {
                             <div>
                               <p>{experience.category} in {experience.location}</p>
                               <div className='header'>
-                                <h4>{experience.name}</h4>
+                                <h5>{experience.name}</h5>
                               </div>
 
                               <p className="what-we-will-do">What we&apos; ll do: </p>
@@ -207,12 +205,12 @@ const Experiences = () => {
               }
             </div >
 
-          </Container >
+          </section >
         </Grid.Column >
 
         {/* Column on right */}
 
-        < Grid.Column width={7} >
+        < Grid.Column className='right-column'>
           <div className="map">
             <div className="map-container">
               {viewport ?

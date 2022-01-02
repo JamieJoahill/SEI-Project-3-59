@@ -52,7 +52,7 @@ const ExperienceForm = ({ handleSubmit, handleChange, formData, setFormData, han
       <div className='new-experience-form'>
         <div>
           <Header as='h1' textAlign='center'>
-            <Header.Content>Add a new experience</Header.Content>
+            <h4>Add a new experience</h4>
           </Header>
         </div>
 

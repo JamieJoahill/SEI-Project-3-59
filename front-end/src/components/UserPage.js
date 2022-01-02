@@ -21,6 +21,7 @@ const UserPage = () => {
     const getData = async () => {
       try {
         const token = getTokenFromLocalStorage()
+        console.log('token', token)
         const { data } = await axios.get('/api/profile', {
           headers: { Authorization: `Bearer ${token}` }
         })
@@ -28,7 +29,7 @@ const UserPage = () => {
         setProfile(data)
       } catch (err) {
         setHasError(true)
-        console.log('ERROR =>', err)
+        console.log('ERROR =>', err.response)
       }
     }
     getData()
@@ -36,11 +37,10 @@ const UserPage = () => {
   //! STORE PROFILE DETAILS
   const userDetails = { ...profile }
   console.log('USER DETAILS =>', userDetails)
-  console.log('USER DETAILS =>', userDetails.languages)
 
   const Page = () => (
     <Container>
-      {!userDetails.languages.length ?
+      { !userDetails ?
         <>
           <br />
           <br />
