@@ -27,6 +27,10 @@
   --rs-state-focus-shadow:0 0 0 0px */
 }
 
+.margin-bottom {
+  margin-bottom: 28px !important
+}
+
 /* ! Body selector */
 body {
   position: relative;
@@ -519,7 +523,7 @@ body .black {
   position: absolute;
 }
 
-.ui.input>input:focus {
+.ui.input > input:focus {
   border-color: black !important;
 
 }
@@ -662,6 +666,24 @@ div.rs-slider-handle.active:before {
 }
 
 /* ! Forms Sign up and Log in */
+.errors {
+  position: absolute;
+  font-size: 12px;
+  right: 3px;
+  top: -20px;
+  color: var(--rs-rate-symbol-checked)
+}
+
+.success {
+  margin-bottom: -17.1406px;
+  font-size: 12px;
+  color: var(--rs-rate-symbol-checked)
+}
+
+.ui.form .field.field input:-webkit-autofill {
+  box-shadow: 0 0 0 100px rgb(0, 0, 0) inset!important;
+  border-color: #000000!important;
+}
 
 .user-message {
   margin: 0 10px;
@@ -750,7 +772,7 @@ select:-webkit-autofill:active {
   background-color: #fc405f;
   color: white;
   border-radius: 12px;
-  width: 350px !important;
+  width: 350px;
   height: 40px !important;
   margin: 35px 0;
 }
@@ -1277,7 +1299,7 @@ select:-webkit-autofill:active {
 }
 
 .right-content {
-  width: calc(100%-200px) !important;
+  width: 100% !important;
   padding-left: 20px;
   display: flex;
   flex-direction: column; 
@@ -1374,7 +1396,15 @@ select:-webkit-autofill:active {
 .map-display-wrapper {
   position: relative;
   width: 100%;
-  height: 500px;
+  height: 320px;
+}
+
+.round-corners {
+  border-radius: 12px !important;
+  border-bottom-left-radius: 12px !important;
+  border-bottom-right-radius: 12px !important;
+  overflow: hidden !important;
+
 }
 
 .map-display-container {
@@ -1418,16 +1448,33 @@ select:-webkit-autofill:active {
   /* Why can't I overwrite this?! */
 }
 
+.mapboxgl-popup-content {
+  background: none !important;
+  box-shadow: none !important;
+}
 
+.mapboxgl-popup-content > .card {
+  width: 280px !important;
+  padding: 10px !important;
+}
+
+.mapboxgl-popup-content > .card > p {
+  margin: 0px !important;
+}
 
 .images-in-map-card {
+  overflow: hidden !important;
+  border-radius: 50px !important;
+  width: 100%;
   display: flex;
   justify-content: space-between;
 }
 
 .image-on-left {
-  height: 250px;
-  width: 200px;
+  height: 200px;
+  width: 160px;
+  background-position: center !important;
+  background-size: cover !important;
 }
 
 .images-in-map-card-right {
@@ -1436,28 +1483,76 @@ select:-webkit-autofill:active {
   flex-direction: column;
 }
 .image-on-right {
-  height: 123px;
-  width: 85px;
+  height: 97px;
+  width: 95px;
+  background-position: center !important;
+  background-size: cover !important;
 }
 /* End of Experiences.js */
 
 /* Add New Experience */
 
 .form-wrapper {
-  margin-top: 74px !important;
-  background-color: rgba(128, 128, 128, 0.301);
+  position: absolute;
+  width: 100vw;
+  top: 0;
+  background-color: rgb(200, 200, 200);
 }
 
+/* media (max) */
+
 .new-experience-form {
-  margin-left: 250px;
-  margin-right: 250px;
+  border-radius: 24px;
+  margin: 175px auto 50px auto;
+  width: 700px;
+
   background-color: white;
   padding: 40px;
-  padding-top: 90px;
+}
+
+@media (max-width: 900px) {
+  .new-experience-form {
+    width: 80vw;
+  }
+}
+
+@media (max-width: 520px) {
+  .new-experience-form {
+    padding-top: 75px;
+    width: 100vw;
+    border-radius: 0px;
+    margin-bottom: 0px;
+  }
+}
+
+.form.coral-button {
+  margin-top: 70px !important;
+  width: 100% !important;
+}
+
+.six.wide.field {
+  margin-bottom: 1em !important;
 }
 
 .submit-button {
   padding: 50px 0px;
+}
+
+.custom-upload {
+  text-align: center;
+  margin: 6px;
+  padding: 6px;
+  position: absolute;
+  height: 32px;
+  width: 93px;
+  border-radius: 3px;
+  background: rgb(200, 200, 200);
+  color: white;
+}
+
+#upload {
+  display: flex !important;
+  justify-content: space-between !important;
 }
 
 /* Favourite cards */
@@ -1514,6 +1609,11 @@ select:-webkit-autofill:active {
   padding-bottom: 10px;
 }
 
+.share {
+  font-size: 20px !important;
+  color: rgb(200, 200, 200)
+}
+
 .main-favourite-icon {
   cursor: pointer;
   transition: all .3s ease;
@@ -1531,50 +1631,94 @@ select:-webkit-autofill:active {
 
 /* Image Grid Start */
 .image-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-gap: 8px;
+  overflow: hidden;
+  display: flex;
+  width: 100%;
+  aspect-ratio: 2;
+  grid-gap: 4px;
   /* border: 1px solid red; */
 }
 
 .main-image {
-  height: 440px;
-  width: 300px;
+  height: 100%;
+  width: 27%;
   background-size: cover !important;
   background-position: center;
 }
 
 .experience-img-single {
-  height: 440px;
-  width: 1125px;
+  height: 100%;
+  width: 100%;
   border-radius: 12px;
 }
 
 .experience-img-0 {
+  width: 27%;
+  height: 100%;
   border-top-left-radius: 12px;
   border-bottom-left-radius: 12px;
 }
 
 .image-innner-grid {
-  display: grid;
-  max-height: 440px;
-  max-width: 200px;
-  grid-template-rows: repeat(2, 1fr);
-  grid-gap: 8px;
+  display: flex;
+  flex-direction: column;
+  width: 18%;
+  grid-gap: 4px;
 }
 
 .experience-img-2,
 .experience-img-3 {
-  max-height: 215px;
-  max-width: 200px;
+  height: 50%;
+  width: 100%;
 }
 
 .experience-img-4 {
+  height: 100%;
+  width: 27%;
   border-top-right-radius: 12px;
   border-bottom-right-radius: 12px;
 }
 
+.similar-experience-container {
+  display: flex;
+  flex-wrap: wrap !important;
+}
 
+h3.ui.header {
+  padding-left: 0px !important;
+  font-size: 24px !important;
+}
+
+
+@media (max-width: 520px) {
+  .experiences-container {
+    margin-top: 74px !important;
+  }
+  .image-grid {
+    aspect-ratio: 1;
+    border-radius: 12px !important;
+  }
+  .experience-img-0, .experience-img-4 {
+    display: none !important;
+  }
+
+  .main-image {
+    width: 70%;
+  }
+  .image-innner-grid {
+    width: 30% !important;
+  }
+
+  .experience-img-2,
+  .experience-img-3 {
+    height: 50%;
+    width: 100%;
+  }
+  
+  .seven.wide.column {
+    width: 100% !important;
+  }
+}
 
 /* Image Grid End */
 
@@ -1613,16 +1757,88 @@ select:-webkit-autofill:active {
   justify-content: space-between;
 }
 
-.experience-details {
-  display: flex;
+.experience-details > h3 {
+  margin-top: 5px !important;
+  padding: 0px !important;
 }
 
+.avatar {
+  margin-top: 15px !important;
+  border-radius: 50%;
+  border: 1px solid rgb(240, 240, 240);
+  height: 60px !important;
+  width: 60px !important;
+  background-size: cover !important;
+  background-size: center !important;
+}
+
+.experience-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.ten.wide.column {
+  padding-right: 35px !important
+}
+
+.custom-card {
+  border-radius: 12px;
+  height: auto !important;
+  padding: 24px;
+  padding-top: 12px !important;
+  margin-right: 0px !important;
+  box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
+}
+
+ul {
+  padding-left: 25px !important;
+}
+
+.custom-card > h3 {
+  padding-left: 15px !important;
+  margin-bottom: 15px !important;
+  font-size: 20px;
+}
+
+.included {
+  padding: 8px 12px !important;
+
+  margin-right: 15px !important;
+}
+
+@media (max-width: 767px) {
+  h3 {
+    font-size: 25px !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .right-to-card {
+    width: 100% !important;
+  }
+
+  .host-title {
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+  }
+
+  .avatar {
+    width: 120px !important;
+    height: 120px !important;
+    margin-bottom: 50px !important;
+  }
+
+  .experience-details > h3 {
+    margin-bottom: 20px !important;
+  }
+
+}
 /* Experience hosted by End */
 
 /* Whats included card start */
 .whats-included-container {
   display: flex;
-  flex-direction: column;
 }
 .whats-included-card {
   padding: 20px !important;
@@ -1632,6 +1848,19 @@ select:-webkit-autofill:active {
 /* Meet your host start */
 .meet-your-host-header {
   display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.meet-your-host-header > h3 {
+  padding: 16px 0 0 15px !important;
+  font-size: 24px;
+}
+
+.meet-your-host-header > .avatar {
+  width: 45px !important;
+  height: 45px !important;
 }
 
 .myh-image {
@@ -1754,15 +1983,42 @@ div.things-to-know-container div.things-to-know-element {
 
 /* Reviews Component Start */
 .review-container {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 10px;
+  display: flex !important;
+  flex-wrap: wrap !important;
   
 }
 
-/* .review-card {
+.reset-pos {
+  position: unset !important;
+}
 
-} */
+.simple-text {
+  font-family: 'airbnb_cereal_appbook';
+  color: #5c5c5c !important;
+  font-size: 13px;
+}
+
+.normal-text {
+  font-family: 'airbnb_cereal_appbook';
+  color: #5c5c5c !important;
+  font-size: 14px;
+  text-align: justify;
+}
+
+@media (max-width: 700px) {
+  .review-container {
+    flex-direction: column !important;
+    width: 100% !important;
+  }
+  .review-card {
+    width: 100% !important;
+  }
+}
+
+.review-card {
+  width: calc(50% - 14px);
+  margin-right: 14px
+}
 
 /* Reviews Component End */
 
@@ -1819,4 +2075,13 @@ textarea:focus {
 
 .user-name h2 {
   color: black;
+}
+
+select:focus-visible {
+  outline-color: black !important
+}
+
+textarea:focus, #upload:focus {
+  border-color: black !important;
+  outline: 1px solid black !important;
 }

@@ -11,19 +11,31 @@ const reviewSchema = new mongoose.Schema({
   timestamps: true
 })
 
+const dateSchema = new mongoose.Schema({
+  day: { type: Number },
+  month: { type: Number },
+  year: { type: Number }
+})
+  
+const locationSchema = new mongoose.Schema({
+  latitude: { type: Number },
+  longitude: { type: Number }
+})
+  
+
 //* Experience schema
 const experienceSchema = new mongoose.Schema({
-  name: { type: String },
-  location: { type: String },
-  locationCoord: { type: Object },
-  date: [{ type: Object }],
-  duration: { type: Number },
-  description: { type: String },
-  category: { type: String },
-  image: [{ type: String }],
+  name: { type: String, required: true },
+  location: { type: String, required: true },
+  locationCoord: locationSchema ,
+  date: [dateSchema],
+  duration: { type: Number, required: true },
+  description: { type: String, required: true },
+  category: { type: String, required: true },
+  image: [{ type: String, required: true }],
   attendees: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
   host: { type: mongoose.Schema.ObjectId, ref: 'User', required: true }, //! CURRENTLY ALL ANNA (FIRST USER IN DB - NEED TO HAVE RANDOM)
-  price: { type: String },
+  price: { type: String, required: true },
   thingsToKnow: [{ type: Object }],
   languages: [{ type: String }],
   accessibilty: [{ type: String }],

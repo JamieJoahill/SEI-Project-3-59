@@ -2,15 +2,15 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, Link, useHistory } from 'react-router-dom'
 import axios from 'axios'
-import { Breadcrumb, Grid, Container, Card, Header, Image, Icon, Button } from 'semantic-ui-react'
+import { Breadcrumb, Grid, Container, Card, Header, Image, Icon, Button, Divider } from 'semantic-ui-react'
 import ReactMapGL, { Marker } from 'react-map-gl'
 import { getPayLoad, getTokenFromLocalStorage } from './Helpers/auth'
 import { addToWishlist } from './Helpers/wishlist'
 // Need React Location and History
 
 const Experience = () => {
-
   const [experience, setExperience] = useState([])
+  const [dates, setDates] = useState([])
   const [experiences, setExperiences] = useState([]) // Used for Similar experiences section
   const [hasError, setHasError] = useState(false)
   const [isDeleted, setIsDeleted] = useState(false)
@@ -18,7 +18,15 @@ const Experience = () => {
   const history = useHistory()
   //const [images, setImages] = useState([])
   const [favourites, setFavourites] = useState([])
+  const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' }
 
+  const convertDate = (date) => {
+    let convertedDate = String(date)
+    if (date.length === 1) {
+      convertedDate = ['0', ...date].join('')
+    }
+    return convertedDate
+  }
 
   useEffect(() => {
     const getData = async () => {
@@ -29,6 +37,19 @@ const Experience = () => {
         // console.log('Data ->', data)
         window.scrollTo(0, 0)
         setExperience(data)
+        let dates = data.date.map(date => {
+          return date.day
+        })
+        dates = [...new Set(dates)].sort((a, b) => a - b)
+        dates = dates.map(date => {
+          const currentDate = new Date
+          let newDate = new Date((new Date).getFullYear(), (new Date).getMonth(), date)
+          newDate = newDate.toLocaleDateString(undefined, options)
+          return newDate
+        }
+        )
+
+        setDates(dates)
       } catch (err) {
         console.log('Error Getting Experience ->', err)
         setHasError(true)
@@ -131,11 +152,11 @@ const Experience = () => {
   const HostDetails = () => (
     <Container>
       <div className="host-title">
-        <Header as="h3">Experience hosted by {details.firstName}</Header>
-        <Image src={details.profilePicture} avatar />
-      </div>
-      <div className="experience-details">
-        <p>{experience.duration > 90 ? <span>{experience.duration / 60} hours</span> : <span>{experience.duration} mins</span>} &middot; Hosted in {experience.languages}</p>
+        <div className="experience-details">
+          <h3>Experience hosted by {details.firstName}</h3>
+          <p>{experience.duration > 90 ? <span>{experience.duration / 60} hours</span> : <span>{experience.duration} mins</span>} &middot; Hosted in {experience.languages}</p>
+        </div>
+        <div className='avatar' style={{ background: `url(${details.profilePicture})` }} />
       </div>
     </Container>
   )
@@ -144,7 +165,7 @@ const Experience = () => {
   const WhatYoullDo = () => (
     <Container>
       <Header as="h3">What you &apos;ll do</Header>
-      <p>{experience.description}</p>
+      <p className='normal-text'>{experience.description}</p>
     </Container>
   )
 
@@ -245,7 +266,7 @@ const Experience = () => {
                       </div>
                       <div>
                         <i aria-hidden="true" className="share square outline icon"></i>
-                        <Icon name='heart outline' className="main-favourite-icon heart" data-id={experience._id} id={experience._id} onClick={(event) => {
+                        <Icon name='heart outline' className="main-favourite-icon heart reset-pos" data-id={experience._id} id={experience._id} onClick={(event) => {
                           addToWishlist(event)
                         }} />
                       </div>
@@ -254,57 +275,77 @@ const Experience = () => {
                   <ImageGrid />
                   <Container>
                     <Grid divided='vertically'>
-                      <Grid.Row columns={1}>
-                        <Grid.Column width={7}>
+                      <Grid.Row columns={2} className='stackable'>
+                        <Grid.Column width={10}>
                           <HostDetails />
-                        </Grid.Column>
-                      </Grid.Row>
-                      <Grid.Row columns={1}>
-                        <Grid.Column width={7}>
+
+                          <Divider />
                           <WhatYoullDo />
-                        </Grid.Column>
-                      </Grid.Row>
-                      <Grid.Row columns={1}>
-                        <Grid.Column width={7}>
+                          <Divider />
+
+
+
                           <Header as="h3">What Is Included</Header>
                           <div className="whats-included-container">
                             {experience.whatIsIncluded ?
                               <>
+
                                 {experience.whatIsIncluded.map((item, index) => {
                                   return (
-                                    <Card className="whats-included-card" key={index}>
-                                      <Header as="h4">{item}</Header>
-                                    </Card>
+                                    <div className="custom-card included" key={index}>
+                                      <p>{item}</p>
+                                    </div>
                                   )
                                 })}
                               </>
                               : 'Loading'
                             }
                           </div>
-                        </Grid.Column>
-                      </Grid.Row>
-                      <Grid.Row columns={1}>
-                        <Grid.Column width={7}>
+
+
+
+                          <Divider />
                           {/* <MeetYourHost /> Old React Semantic Component */}
                           <Container className="meet-your-host">
-                            <div className="meet-your-host-header">
-                              <img src={details.profilePicture} alt={`${details.firstName} profile picture`} className="myh-image" />
+                            <Grid.Row className="meet-your-host-header" stackable>
+                              <div className='avatar' style={{ background: `url(${details.profilePicture})` }} />
                               {/* <Image src={details.profilePicture} avatar  className="myh-image"/> */}
-                              <Header as="h3">Meet your host, {details.firstName}</Header>
-                            </div>
+
+                              <h3>Meet your host, {details.firstName}</h3>
+                            </Grid.Row>
                             {/* Place Holder Text for now as description isnt available */}
                             {/* <p>Hi! I’m Anna from Hong Kong and I live in London. I am a professional photographer, focusing on portrait, family, wedding and event photography for more than 5 years. And the major is also majoring in tourism, so it is definitely an ideal candidate for guiding and travel shooting. I am professional, attentive, patient, interesting and enthusiastic, so don’t worry, I will guide your movements carefully, so as to give you the best pictures.</p> */}
-                            <Icon name='star' size='small' className="star-rating" />  (Not yet reviewed)
-                            <p className="myh-text">{details.about}</p>
+                            <p>About your host:</p>
+                            <p className="normal-text">{details.about}</p>
+
+                            <p>(Not yet reviewed)</p>
+
                           </Container>
                         </Grid.Column>
+                        <Grid.Column className='custom-card' width={6}>
+
+                          <h3>Available this month:</h3>
+                          {dates ?
+                            dates.map(day => {
+                              return (
+                                <ul key={day}>
+                                  <li className='description'>✓ {day}</li>
+                                </ul>
+                              )
+                            })
+                            : null}
+
+                        </Grid.Column>
+
+
                       </Grid.Row>
-                      <Grid.Row columns={1}>
-                        <Grid.Column>
+
+                      <Grid.Row>
+                        <Grid.Column width={16}>
                           {/* <WhereYoullBe /> */}
 
                           <Header as="h3">Where you&apos;ll be</Header>
-                          <div className="map-display-wrapper">
+                          <div className="map-display-wrapper round-corners">
                             <div className="map-display-container">
                               {experience ?
                                 <ReactMapGL
@@ -327,33 +368,34 @@ const Experience = () => {
                           </div>
                         </Grid.Column>
                       </Grid.Row>
-                      <Grid.Row columns={1}>
+
+                      <Grid.Row>
                         <Grid.Column>
-                          <Container>
-                            {experience.reviews ?
-                              <>
-                                <Header as="h3">
-                                  {experience.averageRating}({experience.reviews.length} Reviews)
-                                </Header>
-                                <div className="review-container">
-                                  {experience.reviews.map((review, index) => {
-                                    return (
-                                      <div key={index} className="review-card">
-                                        {/* <p>{review.text}</p> */}
-                                        <span>{review.updatedAt.slice(0, 10)}</span>
-                                        <p>{review.text.slice(0, 200)}...</p>
-                                        <br></br>
-                                      </div>
-                                    )
-                                  })}
-                                </div>
-                              </>
-                              :
-                              <Header as="h3">Unable to load reviews</Header>
-                            }
-                          </Container>
+                        
+                          {experience.reviews ?
+                            <>
+                              <Header as="h3">
+                                {experience.averageRating}({experience.reviews.length} Reviews)
+                              </Header>
+                              <div className="review-container">
+                                {experience.reviews.map((review, index) => {
+                                  return (
+                                    <div key={index} className="review-card">
+                                      {/* <p>{review.text}</p> */}
+                                      <span>{review.updatedAt.slice(0, 10)}</span>
+                                      <p className='simple-text'>{review.text.slice(0, 200)}...</p>
+                                      <br></br>
+                                    </div>
+                                  )
+                                })}
+                              </div>
+                            </>
+                            :
+                            <Header as="h3">Unable to load reviews</Header>
+                          }
                         </Grid.Column>
                       </Grid.Row>
+
                       {/* <Grid.Row columns={1}>
                         <Grid.Column>
                           <ChooseAvailableDates />

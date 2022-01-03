@@ -32,18 +32,26 @@ const Experiences = () => {
     const dates = experience.date
     const datesSet = new Array
     const currentTime = new Date
+    // dates = dates.map(date => {
+    //   return new Date(`${date.year}-${convertDate(date.month)}-${convertDate(date.day)}`)
+    // })
     dates.forEach(date => {
       for (let i = 1; i <= 12; i++) {
-        datesSet.push(new Date(`${currentTime.getFullYear() - 1}-${convertDate(i)}-${convertDate(date.day)}`))
+        // datesSet.push(new Date(`${currentTime.getFullYear() - 1}-${convertDate(i)}-${convertDate(date.day)}`))
         datesSet.push(new Date(`${currentTime.getFullYear() + 1}-${convertDate(i)}-${convertDate(date.day)}`))
-        datesSet.push(new Date(`${currentTime.getFullYear()}-${convertDate(i)}-${convertDate(date.day)}`)) 
+        datesSet.push(new Date(`${currentTime.getFullYear()}-${convertDate(i)}-${convertDate(date.day)}`))
       }
     })
-    console.log('dsssssss', datesSet)
+    // if (experience.name === 'Hive Pro Paintball Experience') {
+    //   console.log(datesSet)
+    // }
+    // console.log('dsssssss', datesSet)
 
     if (datesSet.some(date => (date >= from) && (date <= to))) {
+      // console.log('true')
       return true
     } else {
+      console.log('meh', experience.name)
       return false
     }
   }
@@ -61,10 +69,16 @@ const Experiences = () => {
   }
 
   const checkRating = (experience) => {
-    const rating = parseFloat(experience.averageRating)
-    return (
-      rating >= minRating ? true : false
-    )
+    if (experience.averageRating !== 'Not rated yet') {
+      const rating = parseFloat(experience.averageRating)
+      return (
+        rating >= minRating ? true : false
+      )
+    } else if ( experience.averageRating === 'Not rated yet' && minRating === 0){
+      return true
+    } else {
+      return false
+    }
   }
 
   const filterExperiences = (experiences) => {
@@ -75,6 +89,7 @@ const Experiences = () => {
     }
     if (from && (new URLSearchParams(search).get('from') !== 'Start date')) {
       filtered = filtered.filter(experience => checkDate(experience))
+      console.log('dates filter', filtered.length)
     }
     if (minPrice && maxPrice) {
       filtered = filtered.filter(experience => checkPrice(experience))
@@ -95,7 +110,7 @@ const Experiences = () => {
         } else {
           setExperiences(data)
         }
-        //console.log('EXPERIENCES ->', response) // this works
+        console.log('EXPERIENCES ->', data.length) // this works
 
       } catch (err) {
         setHasError(true)
@@ -201,7 +216,7 @@ const Experiences = () => {
                   })}
                 </div >
                 :
-                <h2>{hasError ? 'Something has gone wrong!' : 'Loading experiences...'}</h2>
+                <p>{hasError ? 'Something has gone wrong!' : 'Loading experiences...'}</p>
               }
             </div >
 
@@ -259,17 +274,16 @@ const Experiences = () => {
                       <Card>
                         <div className='images-in-map-card'>
                           <div>
-                            <img className='image-on-left' src={popup.image[0]} />
+                            <div className='image-on-left' style={{ background: `url(${popup.image[0]})` }}/>
                           </div>
                           <div className='images-in-map-card-right'>
-                            <img className='image-on-right' src={popup.image[1]} />
-                            <img className='image-on-right' src={popup.image[2]} />
+                            <div className='image-on-right' style={{ background: `url(${popup.image[1] ? popup.image[1] : popup.image[0] })` }} />
+                            <div className='image-on-right' style={{ background: `url(${popup.image[2] ? popup.image[2] : popup.image[0] })` }} />
                           </div>
                         </div>
-
-                        <p>TBC reviews &middot; {popup.location}</p>
-                        <p>{popup.name}</p>
-                        <p>{popup.category} &middot; {popup.duration / 60} hours</p>
+                        <h5>{popup.name}</h5>
+                        <p className='description'>TBC reviews &middot; {popup.location}</p> 
+                        <p className='description' >{popup.category} &middot; {popup.duration / 60} hours</p>
                         <p><strong>From {popup.price}</strong>/person</p>
                       </Card>
 
