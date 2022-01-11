@@ -11,7 +11,7 @@
 
 **Group members:** Rhona Petersen, Talia Glantz, Anna Wilczynska, Jamie Joahill
 
-This was my third general assembly project. We had one week to build a full stack MERN application. Using React on the front-end and a Django, Python back-end. We decided to build a clone of the Airbnb experiences section of the Airbnb site.
+This was my third General Assembly project. We had one week to build a full stack MERN application. Using React on the front-end and a Django, Python back-end. We decided to build a clone of the Airbnb experiences section of the Airbnb site.
 
 ## Brief
 
